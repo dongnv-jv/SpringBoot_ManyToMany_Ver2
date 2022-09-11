@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -20,6 +22,8 @@ public class BookEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "book_title")
+    @NotBlank
+    @Size(min=3,max=10)
     private String title;
     @OneToMany(mappedBy = "bookEntity")
     @JsonSerialize(using = CustomBookPublisherSerializer.class)

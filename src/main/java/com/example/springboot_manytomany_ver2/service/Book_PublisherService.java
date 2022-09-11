@@ -5,6 +5,7 @@ import com.example.springboot_manytomany_ver2.entity.Book_Pulisher;
 import com.example.springboot_manytomany_ver2.repository.IBookPublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,5 +20,8 @@ public class Book_PublisherService {
     }
     public Book_Pulisher addBookPulisher(Book_Pulisher Book_Pulisher){
         return iBookPublisherRepository.save(Book_Pulisher);
+    }
+    public List<Book_Pulisher> getByIdBook_publisher(int idBook, int idPublisher){
+        return iBookPublisherRepository.findByBookPublisher( idBook,  idPublisher);
     }
 }
