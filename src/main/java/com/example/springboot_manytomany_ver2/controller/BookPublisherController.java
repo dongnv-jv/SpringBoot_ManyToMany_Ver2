@@ -3,6 +3,7 @@ package com.example.springboot_manytomany_ver2.controller;
 import com.example.springboot_manytomany_ver2.entity.BookEntity;
 import com.example.springboot_manytomany_ver2.entity.Book_Pulisher;
 import com.example.springboot_manytomany_ver2.entity.Publisher;
+import com.example.springboot_manytomany_ver2.exceptionhandle.ExceptionNotFound;
 import com.example.springboot_manytomany_ver2.repository.IBookPublisherRepository;
 import com.example.springboot_manytomany_ver2.service.BookService;
 import com.example.springboot_manytomany_ver2.service.Book_PublisherService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BookPublisherController {
@@ -32,6 +34,11 @@ public class BookPublisherController {
     public ResponseEntity<?> getAllBook() {
         List<BookEntity> list = bookService.getAllBook();
         return ResponseEntity.ok().body(list);
+    }
+    @GetMapping("/getbook/{id}")
+    public ResponseEntity<?> getBookById(@PathVariable(value = "id") int id) throws Exception{
+        Optional<BookEntity> bookEntity=bookService.getBookById(id);
+        return ResponseEntity.ok().body(bookEntity);
     }
 
     @GetMapping("/getpublisher")
@@ -58,6 +65,11 @@ public class BookPublisherController {
     @Transactional
     public ResponseEntity<?> addBook(@Valid @RequestBody BookEntity bookEntity) {
         return ResponseEntity.ok().body(bookService.addBook(bookEntity));
+    }
+    @PostMapping("/update-book")
+    @Transactional
+    public ResponseEntity<?> updateBook(@Valid @RequestBody BookEntity bookEntity) throws Exception{
+        return ResponseEntity.ok().body(bookService.updateBook(bookEntity));
     }
 
     @PostMapping("/add-book-publisher")

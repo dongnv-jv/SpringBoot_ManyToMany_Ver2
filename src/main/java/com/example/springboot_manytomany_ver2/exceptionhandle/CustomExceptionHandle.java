@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -23,6 +24,14 @@ public class CustomExceptionHandle extends ResponseEntityExceptionHandler {
         customError.setTimestamp(new Date());
         customError.setStatus(status.BAD_REQUEST);
 
-        return new ResponseEntity<>(customError,customError.getStatus());
+        return new ResponseEntity(customError,customError.getStatus());
     }
+    @ExceptionHandler(ExceptionNotFound.class)
+    public ResponseEntity<Object> notFoundHandle(ExceptionNotFound ex,WebRequest request){
+        CustomError customError= new CustomError(ex.getMessage(),new Date(),HttpStatus.NOT_FOUND,
+                request.getDescription(true));
+        return new ResponseEntity(customError,customError.getStatus());
+    }
+
+
 }

@@ -19,18 +19,20 @@ public class CustomError {
     private HttpStatus status;
     private List<SubError> subError;
 
+    private String decription;
 
-  /*  private void addSubError(){
-        this.subError= new ArrayList<>();
+    public CustomError(String message, Date timestamp, HttpStatus status, String decription) {
+        this.message = message;
+        this.timestamp = timestamp;
+        this.status = status;
+        this.decription = decription;
     }
 
-    private void addSubError(FieldError fieldError){
-        SubError error= new SubError();
-        error.setMessage(fieldError.getDefaultMessage());
-
-    }*/
-
-
+    public CustomError(String message, Date timestamp, HttpStatus status) {
+        this.message = message;
+        this.timestamp = timestamp;
+        this.status = status;
+    }
 
     public void addSubError(List<FieldError> errors){
         this.subError= new ArrayList<SubError>();
